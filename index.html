@@ -3,151 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimo Ai - Official Website</title>
+    <title>Mimo Ai - Your AI Companion</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* ================= COMMON STYLES & VARIABLES ================= */
+        /* ================= VARIABLES & RESET ================= */
         :root {
-            --bg-dark: #0a0c10;
-            --bg-panel: #141822;
-            --bg-card: #1c2231;
-            --text-main: #ffffff;
-            --text-muted: #8b92a5;
-            --primary-green: #00ff88;
-            --primary-blue: #3b82f6;
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --bg-card: #27272a;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #00ff88;
             --danger: #ef4444;
-            --border-color: #2a3143;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(24, 24, 27, 0.7);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
-        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-base); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
         
-        button { cursor: pointer; border: none; outline: none; transition: 0.2s; font-weight: 600; }
-        input, textarea { width: 100%; padding: 12px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: white; margin-top: 5px; margin-bottom: 15px; font-size: 14px; }
-        input:focus, textarea:focus { border-color: var(--primary-blue); outline: none; }
-        
-        /* ================= USER SITE STYLES ================= */
+        button, a { cursor: pointer; border: none; outline: none; transition: all 0.3s ease; text-decoration: none; }
+        input, textarea { width: 100%; padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; color: white; margin-top: 8px; margin-bottom: 20px; font-size: 14px; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+        label { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+
+        /* ================= USER SITE DESIGN ================= */
         #user-site { display: block; }
         
         /* Navbar */
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(10, 12, 16, 0.95); position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); }
-        .logo { font-size: 24px; font-weight: 800; color: var(--primary-green); cursor: pointer; letter-spacing: 1px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: var(--glass); position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .logo { font-size: 22px; font-weight: 800; color: white; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+        .logo i { color: var(--accent); }
         
         /* Hero Section */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 100px 20px 40px; background: radial-gradient(circle at top center, #1c2231 0%, var(--bg-dark) 70%); }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
-        .hero-title { color: var(--primary-green); font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; }
-        .hero p.desc { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; }
-        .btn-download { background: var(--primary-green); color: #000; padding: 15px 40px; font-size: 18px; border-radius: 30px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3); display: inline-block; text-decoration: none; }
-        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5); }
-        .version-tag { margin-top: 15px; font-size: 14px; color: var(--text-muted); background: var(--bg-card); padding: 5px 15px; border-radius: 20px; display: inline-block; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 60px; position: relative; }
+        .hero::before { content: ''; position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(9, 9, 11, 0) 70%); z-index: -1; }
+        
+        .hero-badge { background: rgba(0, 255, 136, 0.1); color: var(--accent); padding: 6px 16px; border-radius: 30px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(0, 255, 136, 0.2); }
+        .hero h1 { font-size: clamp(40px, 8vw, 70px); font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; background: linear-gradient(to right, #fff, #a1a1aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-title { color: var(--primary); font-size: clamp(16px, 3vw, 22px); margin-bottom: 25px; font-weight: 600; }
+        .hero p.desc { color: var(--text-muted); font-size: 16px; max-width: 600px; margin-bottom: 40px; line-height: 1.7; }
+        
+        .btn-download { background: linear-gradient(135deg, var(--primary), #8b5cf6); color: white; padding: 16px 45px; font-size: 18px; border-radius: 50px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
+        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5); }
+        .version-tag { margin-top: 20px; font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; justify-content: center; }
+        .version-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; }
 
         /* Screenshots Section */
-        .screenshots-section { padding: 60px 20px; text-align: center; background: var(--bg-panel); }
-        .screenshots-section h2 { font-size: 2rem; margin-bottom: 40px; }
-        .screenshot-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 20px; max-width: 1200px; margin: 0 auto; scroll-snap-type: x mandatory; }
-        .screenshot-gallery img { height: 400px; border-radius: 15px; border: 2px solid var(--border-color); scroll-snap-align: center; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: 0.3s; }
-        .screenshot-gallery img:hover { transform: scale(1.02); border-color: var(--primary-green); }
-        .no-data { color: var(--text-muted); font-style: italic; width: 100%; }
+        .screenshots-section { padding: 80px 0; text-align: center; background: var(--bg-surface); border-top: 1px solid var(--border); overflow: hidden; }
+        .screenshots-section h2 { font-size: 32px; margin-bottom: 40px; font-weight: 700; }
+        .screenshot-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 20px 5%; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .screenshot-gallery::-webkit-scrollbar { display: none; }
+        .screenshot-gallery img { height: 450px; border-radius: 20px; border: 1px solid var(--border); scroll-snap-align: center; object-fit: cover; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: 0.3s; }
+        .screenshot-gallery img:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.6); }
 
-        /* ================= ADMIN PANEL STYLES ================= */
-        #admin-site { display: none; height: 100vh; background: var(--bg-dark); flex-direction: row; }
+        /* Features Section */
+        .features-section { padding: 80px 5%; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1100px; margin: 40px auto 0; }
+        .feature-card { background: var(--bg-surface); padding: 30px; border-radius: 16px; border: 1px solid var(--border); text-align: left; transition: 0.3s; }
+        .feature-card:hover { border-color: rgba(99, 102, 241, 0.5); transform: translateY(-5px); }
+        .feature-card i { font-size: 28px; color: var(--primary); margin-bottom: 20px; background: rgba(99, 102, 241, 0.1); padding: 15px; border-radius: 12px; }
+        .feature-card h3 { font-size: 18px; margin-bottom: 10px; color: white; }
+        .feature-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+
+        /* Footer */
+        footer { text-align: center; padding: 30px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 14px; }
+
+        /* ================= ADMIN PANEL DESIGN ================= */
+        #admin-site { display: none; min-height: 100vh; background: var(--bg-base); }
         
-        /* Admin Sidebar */
-        .admin-sidebar { width: 260px; background: var(--bg-panel); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
-        .admin-brand { padding: 20px; font-size: 20px; font-weight: bold; border-bottom: 1px solid var(--border-color); color: var(--primary-blue); }
-        .admin-menu { list-style: none; padding: 20px 0; flex: 1; }
-        .admin-menu li { padding: 15px 20px; cursor: pointer; color: var(--text-muted); transition: 0.2s; border-left: 3px solid transparent; }
+        /* Desktop Sidebar */
+        .admin-sidebar { width: 280px; background: var(--bg-surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 10; }
+        .admin-brand { padding: 25px; font-size: 20px; font-weight: 700; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .admin-brand i { color: var(--primary); }
+        .admin-menu { list-style: none; padding: 20px 10px; flex: 1; }
+        .admin-menu li { padding: 15px 20px; margin-bottom: 5px; border-radius: 10px; cursor: pointer; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
         .admin-menu li:hover { background: var(--bg-card); color: white; }
-        .admin-menu li.active { background: rgba(59, 130, 246, 0.1); color: var(--primary-blue); border-left-color: var(--primary-blue); }
-        .admin-bottom { padding: 20px; border-top: 1px solid var(--border-color); }
-        .btn-exit { width: 100%; background: var(--danger); color: white; padding: 12px; border-radius: 8px; }
+        .admin-menu li.active { background: rgba(99, 102, 241, 0.15); color: var(--primary); }
+        .admin-bottom { padding: 20px; border-top: 1px solid var(--border); }
+        .btn-exit { width: 100%; background: rgba(239, 68, 68, 0.1); color: var(--danger); padding: 14px; border-radius: 10px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-exit:hover { background: var(--danger); color: white; }
 
-        /* Admin Main Area */
-        .admin-main { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; }
-        .admin-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        /* Admin Content */
+        .admin-main { margin-left: 280px; padding: 40px; min-height: 100vh; }
+        .admin-header-top { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
         .admin-header-top h1 { font-size: 24px; font-weight: 600; }
         
-        /* Admin Sections */
-        .admin-section { display: none; animation: fadeIn 0.3s ease; }
+        .admin-section { display: none; animation: slideUp 0.4s ease; }
         .admin-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
-        .card h2 { margin-bottom: 20px; font-size: 18px; color: var(--primary-blue); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin-bottom: 25px; max-width: 800px; }
+        .card h2 { margin-bottom: 25px; font-size: 18px; color: white; font-weight: 600; border-bottom: 1px solid var(--border); padding-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         
-        .btn-primary { background: var(--primary-blue); color: white; padding: 12px 24px; border-radius: 8px; font-size: 15px; }
-        .btn-primary:hover { background: #2563eb; }
-        
-        .btn-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); padding: 8px 15px; border-radius: 6px; font-size: 12px; }
+        .btn-primary { background: var(--primary); color: white; padding: 14px 28px; border-radius: 10px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-danger { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); padding: 10px 16px; border-radius: 8px; font-weight: 600; }
         .btn-danger:hover { background: var(--danger); color: white; }
 
-        /* Screenshot Manager */
-        .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
-        .ss-item { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); height: 180px; }
-        .ss-item img { width: 100%; height: 100%; object-fit: cover; }
-        .ss-delete { position: absolute; top: 5px; right: 5px; background: var(--danger); color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; border: none; }
+        /* Upload Box */
+        .upload-box { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; margin-top: 20px; transition: 0.3s; background: rgba(255,255,255,0.02); }
+        .upload-box:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .upload-box i { font-size: 32px; color: var(--primary); margin-bottom: 15px; }
+
+        /* APK Info */
+        .apk-file-info { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid var(--border); }
         
-        /* APK Manager */
-        .apk-file-info { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 15px; }
-        .file-icon { font-size: 24px; margin-right: 15px; }
-        
-        /* Upload Area */
-        .upload-box { border: 2px dashed var(--border-color); border-radius: 10px; padding: 30px; text-align: center; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.02); }
-        .upload-box:hover { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.05); }
-        
-        /* Bottom Nav for Mobile */
-        .mobile-nav { display: none; }
-        
-        @media (max-width: 768px) {
+        /* Screenshots Grid */
+        .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 25px; }
+        .ss-item { position: relative; border-radius: 12px; overflow: hidden; height: 200px; border: 1px solid var(--border); }
+        .ss-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .ss-item:hover img { transform: scale(1.05); }
+        .ss-delete { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: var(--danger); border-radius: 8px; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; cursor: pointer; backdrop-filter: blur(4px); }
+        .ss-delete:hover { background: var(--danger); color: white; }
+
+        /* Loading Overlay */
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(9, 9, 11, 0.9); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: 600; backdrop-filter: blur(5px); }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Mobile Bottom Nav */
+        .mobile-nav { display: none; position: fixed; bottom: 0; width: 100%; background: var(--glass); backdrop-filter: blur(12px); border-top: 1px solid var(--border); z-index: 100; padding: 10px 0; justify-content: space-around; }
+        .mobile-nav div { color: var(--text-muted); font-size: 12px; text-align: center; cursor: pointer; display: flex; flex-direction: column; gap: 5px; align-items: center; }
+        .mobile-nav div i { font-size: 20px; }
+        .mobile-nav div.active { color: var(--primary); }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 900px) {
             .admin-sidebar { display: none; }
-            .mobile-nav { display: flex; justify-content: space-around; background: var(--bg-panel); border-top: 1px solid var(--border-color); position: fixed; bottom: 0; width: 100%; padding: 10px 0; z-index: 100; }
-            .mobile-nav div { color: var(--text-muted); font-size: 12px; text-align: center; cursor: pointer; }
-            .mobile-nav div.active { color: var(--primary-blue); }
-            .admin-main { padding: 15px; padding-bottom: 80px; }
+            .admin-main { margin-left: 0; padding: 20px; padding-bottom: 90px; }
+            .mobile-nav { display: flex; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .screenshot-gallery img { height: 300px; }
+            .features-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- লোডিং ওভারলে -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <div>Uploading to Server...</div>
+    </div>
+
     <!-- ================= USER SITE ================= -->
     <div id="user-site">
         <nav class="navbar">
-            <!-- Admin Login via Double Click -->
-            <div class="logo" ondblclick="openAdmin()" id="nav-app-name">Mimo Ai</div>
-            <div style="font-size: 14px; color: var(--text-muted);">Official Download</div>
+            <!-- অ্যাডমিন প্যানেলে ঢুকতে লোগোতে ডাবল ক্লিক করুন -->
+            <div class="logo" ondblclick="openAdmin()" id="nav-app-name">
+                <i class="fa-solid fa-robot"></i> Mimo Ai
+            </div>
+            <a href="#download" class="btn-download" style="padding: 10px 24px; font-size: 14px;">Download</a>
         </nav>
 
         <header class="hero">
+            <div class="hero-badge">v<span id="hero-version">1.0.0</span> is now live!</div>
             <h1 id="hero-app-name">Mimo Ai</h1>
             <div class="hero-title" id="hero-title">Your Voice My World</div>
-            <p class="desc" id="hero-desc">Experience the next generation of AI companion. Talk, share your screen, and automate your daily tasks with Mimo Ai.</p>
+            <p class="desc" id="hero-desc">Experience the next generation of AI companion. Talk, share your screen, and automate your daily tasks seamlessly.</p>
             
-            <a href="#" id="download-btn" class="btn-download" onclick="handleDownload(event)">Download APK</a>
-            <div class="version-tag" id="hero-version">Version 1.0.0 | Size: 0 MB</div>
+            <div id="download">
+                <a href="#" id="download-btn" class="btn-download" onclick="handleDownload(event)">
+                    <i class="fa-brands fa-android"></i> Download APK
+                </a>
+                <div class="version-tag">
+                    <span></span> Size: <span id="hero-size">0 MB</span> | Lifetime License
+                </div>
+            </div>
         </header>
 
-        <section class="screenshots-section">
-            <h2>App Screenshots</h2>
+        <section class="screenshots-section" id="screenshots">
+            <h2>App Interface</h2>
             <div class="screenshot-gallery" id="user-screenshot-gallery">
-                <!-- Screenshots will be injected here via JS -->
+                <!-- Screenshots will load here -->
             </div>
         </section>
+
+        <section class="features-section">
+            <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">Premium Features</h2>
+            <p style="color: var(--text-muted);">Everything you need in an AI assistant.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                    <h3>Voice Engine</h3>
+                    <p>Natural voice interaction with custom voice packs. Just say "Hey Mimo" to wake her up.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-camera"></i>
+                    <h3>Camera Vision</h3>
+                    <p>Share your screen or camera for real-time AI assistance and analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-key"></i>
+                    <h3>Lifetime License</h3>
+                    <p>Offline activation tied securely to your device ID. Never expires.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 Mimo Ai. Developed by Tuhin.</p>
+        </footer>
     </div>
 
     <!-- ================= ADMIN PANEL ================= -->
     <div id="admin-site">
-        <!-- Sidebar (Desktop) -->
+        <!-- Desktop Sidebar -->
         <div class="admin-sidebar">
-            <div class="admin-brand">Mimo Admin</div>
+            <div class="admin-brand"><i class="fa-solid fa-shield-halved"></i> Admin Panel</div>
             <ul class="admin-menu">
-                <li class="active" onclick="switchAdminTab('sec-settings', this)">⚙️ App Settings</li>
-                <li onclick="switchAdminTab('sec-screenshots', this)">🖼️ Screenshots</li>
-                <li onclick="switchAdminTab('sec-apk', this)">📦 APK Manager</li>
-                <li onclick="switchAdminTab('sec-generate', this)">🔑 Generate Key</li>
+                <li class="active" onclick="switchAdminTab('sec-settings', this)"><i class="fa-solid fa-gear"></i> App Settings</li>
+                <li onclick="switchAdminTab('sec-screenshots', this)"><i class="fa-solid fa-images"></i> Screenshots</li>
+                <li onclick="switchAdminTab('sec-apk', this)"><i class="fa-brands fa-android"></i> APK Manager</li>
             </ul>
             <div class="admin-bottom">
-                <button class="btn-exit" onclick="closeAdmin()">Exit Dashboard</button>
+                <button class="btn-exit" onclick="closeAdmin()"><i class="fa-solid fa-right-from-bracket"></i> Exit Dashboard</button>
             </div>
         </div>
 
@@ -157,290 +237,278 @@
                 <h1 id="admin-page-title">App Settings</h1>
             </div>
 
-            <!-- 1. Settings Section -->
+            <!-- Settings -->
             <div id="sec-settings" class="admin-section active">
                 <div class="card">
-                    <h2>Basic Information</h2>
-                    <label>App Name (Logo & Hero)</label>
+                    <h2><i class="fa-solid fa-pen-to-square"></i> Basic Information</h2>
+                    <label>App Name</label>
                     <input type="text" id="input-app-name" placeholder="e.g. Mimo Ai">
                     
-                    <label>Version (e.g. 1.0.5)</label>
+                    <label>Version Number</label>
                     <input type="text" id="input-version" placeholder="e.g. 1.0.0">
                     
                     <label>Title / Slogan</label>
                     <input type="text" id="input-title" placeholder="e.g. Your Voice My World">
                     
                     <label>Description</label>
-                    <textarea id="input-desc" rows="4" placeholder="App description here..."></textarea>
+                    <textarea id="input-desc" rows="4"></textarea>
                     
-                    <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+                    <button class="btn-primary" onclick="saveSettings()"><i class="fa-solid fa-cloud-arrow-up"></i> Save Changes</button>
                 </div>
             </div>
 
-            <!-- 2. Screenshots Section -->
+            <!-- Screenshots -->
             <div id="sec-screenshots" class="admin-section">
                 <div class="card">
-                    <h2>Manage Screenshots</h2>
+                    <h2><i class="fa-solid fa-images"></i> Manage Screenshots</h2>
                     <div class="upload-box" onclick="document.getElementById('ss-upload').click()">
-                        <div style="font-size: 30px; margin-bottom: 10px;">📸</div>
-                        <p>Click to upload screenshot</p>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p style="font-weight: 600;">Click to upload new screenshot</p>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">JPG, PNG supported</p>
                         <input type="file" id="ss-upload" accept="image/*" style="display: none;" onchange="uploadScreenshot(event)">
                     </div>
-                    
                     <div class="ss-grid" id="admin-ss-grid">
-                        <!-- Admin thumbnails injected here -->
+                        <!-- Admin images load here -->
                     </div>
                 </div>
             </div>
 
-            <!-- 3. APK Manager Section -->
+            <!-- APK Manager -->
             <div id="sec-apk" class="admin-section">
                 <div class="card">
-                    <h2>Manage APK File</h2>
+                    <h2><i class="fa-brands fa-android"></i> Manage APK File</h2>
+                    <div id="current-apk-container"></div>
                     
-                    <div id="current-apk-container">
-                        <!-- Current APK info injected here -->
-                    </div>
-
-                    <div class="upload-box" onclick="document.getElementById('apk-upload').click()" style="margin-top: 20px;">
-                        <div style="font-size: 30px; margin-bottom: 10px;">📦</div>
-                        <p>Click to upload new APK</p>
+                    <div class="upload-box" onclick="document.getElementById('apk-upload').click()">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                        <p style="font-weight: 600;">Click to upload new APK</p>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Max file size 100MB</p>
                         <input type="file" id="apk-upload" accept=".apk" style="display: none;" onchange="uploadAPK(event)">
                     </div>
-                </div>
-            </div>
-
-            <!-- 4. Generate Key Section -->
-            <div id="sec-generate" class="admin-section">
-                <div class="card">
-                    <h2>Generate License Key</h2>
-                    <label>Request from user</label>
-                    <textarea rows="2" placeholder="MIMO-REQ1..."></textarea>
-
-                    <label>Customer note</label>
-                    <input type="text" placeholder="Name / Phone">
-
-                    <label>Plan</label>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">Lifetime</button>
-                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">365 d</button>
-                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">30 d</button>
-                    </div>
-
-                    <button class="btn-primary" onclick="alert('Key Generated!')">Generate Key</button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Bottom Nav -->
         <div class="mobile-nav">
-            <div class="active" onclick="switchAdminTab('sec-settings', this)">⚙️<br>Settings</div>
-            <div onclick="switchAdminTab('sec-screenshots', this)">🖼️<br>Images</div>
-            <div onclick="switchAdminTab('sec-apk', this)">📦<br>APK</div>
-            <div onclick="switchAdminTab('sec-generate', this)">🔑<br>Keys</div>
-            <div onclick="closeAdmin()" style="color: var(--danger);">🚪<br>Exit</div>
+            <div class="active" onclick="switchAdminTab('sec-settings', this)"><i class="fa-solid fa-gear"></i> Settings</div>
+            <div onclick="switchAdminTab('sec-screenshots', this)"><i class="fa-solid fa-images"></i> Images</div>
+            <div onclick="switchAdminTab('sec-apk', this)"><i class="fa-brands fa-android"></i> APK</div>
+            <div onclick="closeAdmin()" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Exit</div>
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
-    <script>
-        // ডিফল্ট ডাটা (যদি লোকাল স্টোরেজে কিছু না থাকে)
-        const defaultData = {
-            appName: "Mimo Ai",
-            version: "1.0.0",
-            title: "Your Voice My World",
-            desc: "Experience the next generation of AI companion. Talk, share your screen, and automate your daily tasks with Mimo Ai.",
-            screenshots: [], // Base64 Images
-            apkName: "",
-            apkSize: "0 MB",
-            apkUrl: ""
+    <!-- ================= JAVASCRIPT & FIREBASE ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCxsL4wQj6Jtq2Y31VuAHm979g9bn2U5o",
+            authDomain: "mimo-ai-download-site.firebaseapp.com",
+            databaseURL: "https://mimo-ai-download-site-default-rtdb.firebaseio.com",
+            projectId: "mimo-ai-download-site",
+            storageBucket: "mimo-ai-download-site.firebasestorage.app",
+            messagingSenderId: "611789776474",
+            appId: "1:611789776474:web:741413bca3de35d1551a63"
         };
 
-        // ডাটা লোড করা
-        let appData = JSON.parse(localStorage.getItem('mimoAppData')) || defaultData;
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const storage = getStorage(app);
 
-        // UI আপডেট ফাংশন
+        let appData = {
+            settings: { appName: "Mimo Ai", version: "1.0.0", title: "Your Voice My World", desc: "Loading..." },
+            screenshots: [],
+            apk: null
+        };
+
+        // ================= REAL-TIME DATA =================
+        onValue(ref(db, 'appData'), (snapshot) => {
+            if (snapshot.exists()) {
+                appData = snapshot.val();
+                if(!appData.screenshots) appData.screenshots = [];
+                if(!appData.settings) appData.settings = { appName: "Mimo Ai", version: "1.0.0", title: "Mimo", desc: "Desc" };
+                renderUI();
+            } else {
+                set(ref(db, 'appData'), appData);
+            }
+        });
+
+        // ================= UI RENDERING =================
         function renderUI() {
-            // --- User Site Update ---
-            document.getElementById('nav-app-name').innerText = appData.appName;
-            document.getElementById('hero-app-name').innerText = appData.appName;
-            document.getElementById('hero-title').innerText = appData.title;
-            document.getElementById('hero-desc').innerText = appData.desc;
-            document.getElementById('hero-version').innerText = `Version ${appData.version} | Size: ${appData.apkSize}`;
+            // User Site
+            document.getElementById('nav-app-name').innerHTML = `<i class="fa-solid fa-robot"></i> ${appData.settings.appName}`;
+            document.getElementById('hero-app-name').innerText = appData.settings.appName;
+            document.getElementById('hero-title').innerText = appData.settings.title;
+            document.getElementById('hero-desc').innerText = appData.settings.desc;
+            document.getElementById('hero-version').innerText = appData.settings.version;
             
+            if (appData.apk) {
+                document.getElementById('hero-size').innerText = appData.apk.size + " MB";
+            }
+
             const downloadBtn = document.getElementById('download-btn');
-            if (!appData.apkUrl) {
-                downloadBtn.innerText = "Coming Soon...";
-                downloadBtn.style.background = "var(--text-muted)";
+            if (!appData.apk || !appData.apk.url) {
+                downloadBtn.innerHTML = `<i class="fa-solid fa-hourglass-half"></i> Coming Soon...`;
+                downloadBtn.style.opacity = "0.7";
                 downloadBtn.style.pointerEvents = "none";
             } else {
-                downloadBtn.innerText = "Download APK";
-                downloadBtn.style.background = "var(--primary-green)";
+                downloadBtn.innerHTML = `<i class="fa-brands fa-android"></i> Download APK`;
+                downloadBtn.style.opacity = "1";
                 downloadBtn.style.pointerEvents = "auto";
             }
 
-            // Update User Screenshots
+            // User Screenshots
             const userGallery = document.getElementById('user-screenshot-gallery');
             userGallery.innerHTML = '';
             if (appData.screenshots.length === 0) {
-                userGallery.innerHTML = '<p class="no-data">No screenshots uploaded yet.</p>';
+                userGallery.innerHTML = '<p style="color: gray; width: 100%;">No screenshots uploaded yet.</p>';
             } else {
-                appData.screenshots.forEach(img => {
-                    userGallery.innerHTML += `<img src="${img}" alt="Screenshot">`;
+                appData.screenshots.forEach(imgUrl => {
+                    userGallery.innerHTML += `<img src="${imgUrl}" alt="Mimo AI Screenshot">`;
                 });
             }
 
-            // --- Admin Panel Update ---
-            document.getElementById('input-app-name').value = appData.appName;
-            document.getElementById('input-version').value = appData.version;
-            document.getElementById('input-title').value = appData.title;
-            document.getElementById('input-desc').value = appData.desc;
+            // Admin Settings
+            document.getElementById('input-app-name').value = appData.settings.appName;
+            document.getElementById('input-version').value = appData.settings.version;
+            document.getElementById('input-title').value = appData.settings.title;
+            document.getElementById('input-desc').value = appData.settings.desc;
 
-            // Update Admin Screenshot Manager
+            // Admin Screenshots
             const adminGrid = document.getElementById('admin-ss-grid');
             adminGrid.innerHTML = '';
-            appData.screenshots.forEach((img, index) => {
+            appData.screenshots.forEach((imgUrl, index) => {
                 adminGrid.innerHTML += `
                     <div class="ss-item">
-                        <img src="${img}">
-                        <button class="ss-delete" onclick="deleteScreenshot(${index})">✖</button>
+                        <img src="${imgUrl}">
+                        <div class="ss-delete" onclick="deleteScreenshot(${index})"><i class="fa-solid fa-trash"></i></div>
                     </div>
                 `;
             });
 
-            // Update Admin APK Manager
+            // Admin APK
             const apkContainer = document.getElementById('current-apk-container');
-            if (appData.apkUrl) {
+            if (appData.apk && appData.apk.url) {
                 apkContainer.innerHTML = `
                     <div class="apk-file-info">
-                        <div style="display:flex; align-items:center;">
-                            <div class="file-icon">📱</div>
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <i class="fa-brands fa-android" style="font-size: 32px; color: var(--accent);"></i>
                             <div>
-                                <div style="font-weight: bold;">${appData.apkName}</div>
-                                <div style="font-size: 12px; color: var(--text-muted);">${appData.apkSize}</div>
+                                <div style="font-weight: 600; color: white;">${appData.apk.name}</div>
+                                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${appData.apk.size} MB</div>
                             </div>
                         </div>
-                        <button class="btn-danger" onclick="deleteAPK()">Delete</button>
+                        <button class="btn-danger" onclick="deleteAPK()"><i class="fa-solid fa-trash"></i> Delete</button>
                     </div>
                 `;
             } else {
-                apkContainer.innerHTML = `<p style="color: var(--text-muted);">No APK uploaded currently.</p>`;
+                apkContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 14px;">No APK uploaded currently.</p>`;
             }
         }
 
-        // সেটিংস সেভ করা
-        function saveSettings() {
-            appData.appName = document.getElementById('input-app-name').value || "Mimo Ai";
-            appData.version = document.getElementById('input-version').value || "1.0.0";
-            appData.title = document.getElementById('input-title').value;
-            appData.desc = document.getElementById('input-desc').value;
-            
-            saveToLocalStorage();
-            alert('Settings Saved Successfully!');
+        // ================= ADMIN ACTIONS =================
+        window.saveSettings = async function() {
+            const newSettings = {
+                appName: document.getElementById('input-app-name').value || "Mimo Ai",
+                version: document.getElementById('input-version').value || "1.0.0",
+                title: document.getElementById('input-title').value,
+                desc: document.getElementById('input-desc').value
+            };
+            await set(ref(db, 'appData/settings'), newSettings);
+            alert('Settings Saved to Firebase!');
         }
 
-        // স্ক্রিনশট আপলোড (Base64)
-        function uploadScreenshot(event) {
+        window.uploadScreenshot = async function(event) {
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    appData.screenshots.push(e.target.result);
-                    saveToLocalStorage();
-                };
-                reader.readAsDataURL(file);
+            if (!file) return;
+            document.getElementById('loading').style.display = 'flex';
+            try {
+                const storageRef = sRef(storage, 'screenshots/' + Date.now() + '_' + file.name);
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+                let currentScreenshots = appData.screenshots || [];
+                currentScreenshots.push(downloadURL);
+                await set(ref(db, 'appData/screenshots'), currentScreenshots);
+            } catch (error) {
+                alert('Error: ' + error.message);
             }
-            event.target.value = ''; // Reset input
-        }
-
-        // স্ক্রিনশট ডিলিট
-        function deleteScreenshot(index) {
-            if(confirm('Are you sure you want to delete this screenshot?')) {
-                appData.screenshots.splice(index, 1);
-                saveToLocalStorage();
-            }
-        }
-
-        // APK আপলোড (শুধু নাম এবং সাইজ সিমুলেট করা হচ্ছে)
-        function uploadAPK(event) {
-            const file = event.target.files[0];
-            if (file) {
-                appData.apkName = file.name;
-                // সাইজ ফরম্যাট করা (MB)
-                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-                appData.apkSize = sizeInMB + " MB";
-                
-                // ডেমো হিসেবে একটি ফেইক URL সেট করা হচ্ছে (বাস্তব ব্যাকএন্ড ছাড়া ডাউনলোড কাজ করবে না)
-                appData.apkUrl = URL.createObjectURL(file); 
-                
-                saveToLocalStorage();
-                alert('APK Uploaded (Simulated)! Note: For real download, you need a backend server.');
-            }
+            document.getElementById('loading').style.display = 'none';
             event.target.value = '';
         }
 
-        // APK ডিলিট
-        function deleteAPK() {
-            if(confirm('Are you sure you want to delete the current APK?')) {
-                appData.apkName = "";
-                appData.apkSize = "0 MB";
-                appData.apkUrl = "";
-                saveToLocalStorage();
+        window.deleteScreenshot = async function(index) {
+            if(confirm('Are you sure you want to delete this screenshot?')) {
+                let currentScreenshots = appData.screenshots;
+                currentScreenshots.splice(index, 1);
+                await set(ref(db, 'appData/screenshots'), currentScreenshots);
             }
         }
 
-        // ডাউনলোড বাটনে ক্লিক করলে
-        function handleDownload(e) {
-            if(!appData.apkUrl) {
-                e.preventDefault();
-                return;
+        window.uploadAPK = async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            document.getElementById('loading').style.display = 'flex';
+            try {
+                const storageRef = sRef(storage, 'apk/' + file.name);
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+                await set(ref(db, 'appData/apk'), { name: file.name, size: sizeInMB, url: downloadURL });
+                alert('APK Uploaded Successfully!');
+            } catch (error) {
+                alert('Error: ' + error.message);
             }
-            // ডেমো লিংক
+            document.getElementById('loading').style.display = 'none';
+            event.target.value = '';
+        }
+
+        window.deleteAPK = async function() {
+            if(confirm('Delete current APK file?')) {
+                await set(ref(db, 'appData/apk'), null);
+            }
+        }
+
+        window.handleDownload = function(e) {
+            if(!appData.apk || !appData.apk.url) { e.preventDefault(); return; }
             e.preventDefault();
-            alert(`Downloading: ${appData.apkName}`);
+            window.open(appData.apk.url, '_blank');
         }
 
-        // লোকাল স্টোরেজে সেভ এবং UI রিফ্রেশ
-        function saveToLocalStorage() {
-            localStorage.setItem('mimoAppData', JSON.stringify(appData));
-            renderUI();
-        }
-
-        // ================= ADMIN NAVIGATION LOGIC =================
-        
-        // URL চেক করা (#admon থাকলে অ্যাডমিন ওপেন হবে)
+        // ================= NAVIGATION =================
         window.onload = function() {
-            renderUI();
-            if (window.location.hash === '#admon') {
-                openAdmin();
-            }
+            if (window.location.hash === '#admon') { openAdmin(); }
         };
 
-        function openAdmin() {
+        window.openAdmin = function() {
             document.getElementById('user-site').style.display = 'none';
-            document.getElementById('admin-site').style.display = 'flex';
+            document.getElementById('admin-site').style.display = 'block';
             window.location.hash = '#admon';
+            window.scrollTo(0, 0);
         }
 
-        function closeAdmin() {
+        window.closeAdmin = function() {
             document.getElementById('user-site').style.display = 'block';
             document.getElementById('admin-site').style.display = 'none';
             window.location.hash = '';
+            window.scrollTo(0, 0);
         }
 
-        function switchAdminTab(sectionId, element) {
-            // সেকশন হাইড করা
+        window.switchAdminTab = function(sectionId, element) {
             document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-
-            // মেনু অ্যাক্টিভ করা (ডেস্কটপ)
-            if(element.tagName === 'LI') {
+            
+            // Update active state for desktop sidebar
+            if(element.parentElement.classList.contains('admin-menu')) {
                 document.querySelectorAll('.admin-menu li').forEach(li => li.classList.remove('active'));
                 element.classList.add('active');
-                document.getElementById('admin-page-title').innerText = element.innerText.replace(/[^\w\s]/gi, '').trim();
-            } 
-            // মেনু অ্যাক্টিভ করা (মোবাইল)
-            else if(element.tagName === 'DIV') {
+                document.getElementById('admin-page-title').innerText = element.innerText.trim();
+            }
+            // Update active state for mobile bottom nav
+            if(element.parentElement.classList.contains('mobile-nav')) {
                 document.querySelectorAll('.mobile-nav div').forEach(div => div.classList.remove('active'));
                 element.classList.add('active');
             }
