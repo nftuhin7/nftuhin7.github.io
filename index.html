@@ -1,2277 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GamerX - Dominate The Battleground | Free Fire Esports</title>
-  <meta name="description" content="Join high-stakes Free Fire tournaments, compete with top esports squads, and win massive cash prize pools daily. Download the app now!">
-  <meta name="theme-color" content="#0a0512">
-
-  <!-- Google Fonts: Orbitron & Rajdhani for futuristic esports aesthetics -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    /* ==========================================================
-       CSS VARIABLES & GLOBAL THEMING (Esports Dark / Neon Palette)
-       ========================================================== */
-    :root {
-      --bg-dark: #07030c;
-      --bg-card: rgba(18, 9, 32, 0.7);
-      --bg-card-hover: rgba(30, 15, 52, 0.85);
-      --neon-orange: #ff5500;
-      --neon-red: #ff0044;
-      --neon-purple: #8b00ff;
-      --neon-purple-glow: rgba(139, 0, 255, 0.45);
-      --neon-orange-glow: rgba(255, 85, 0, 0.5);
-      --neon-red-glow: rgba(255, 0, 68, 0.5);
-      --text-main: #f3f0f7;
-      --text-muted: #9f96b0;
-      --font-display: 'Orbitron', -apple-system, sans-serif;
-      --font-heading: 'Rajdhani', -apple-system, sans-serif;
-      --font-body: 'Inter', -apple-system, sans-serif;
-      --border-glow: 1px solid rgba(139, 0, 255, 0.25);
-      --border-active: 1px solid rgba(255, 85, 0, 0.6);
-      --radius-sm: 8px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      line-height: 1.6;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(139, 0, 255, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 60%, rgba(255, 85, 0, 0.1) 0%, transparent 45%),
-        linear-gradient(rgba(7, 3, 12, 0.95), rgba(7, 3, 12, 0.98)),
-        radial-gradient(#200c3b 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px;
-      padding-bottom: 90px; /* buffer for permanent bottom download bar */
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      text-align: center;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 10%, #ff884d 50%, #ff0044 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      max-width: 650px;
-      margin: 0 auto 50px auto;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-family: var(--font-heading);
-      font-weight: 600;
-    }
-
-    /* ==========================================================
-       GLOW BUTTONS & GLASSMORPHISM
-       ========================================================== */
-    .btn-cyber {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 14px 28px;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(135deg, #ff0044 0%, #ff5500 50%, #8b00ff 100%);
-      background-size: 200% 200%;
-      animation: gradientShift 4s ease infinite;
-      box-shadow: 0 0 20px var(--neon-orange-glow);
-      transition: var(--transition);
-      z-index: 1;
-    }
-
-    .btn-cyber::before {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      background: #10061e;
-      border-radius: calc(var(--radius-sm) - 2px);
-      z-index: -1;
-      transition: var(--transition);
-    }
-
-    .btn-cyber:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px var(--neon-red-glow), 0 0 50px var(--neon-purple-glow);
-    }
-
-    .btn-cyber:hover::before {
-      background: transparent;
-    }
-
-    .btn-solid {
-      background: linear-gradient(135deg, #ff5500, #ff0044);
-      color: #fff;
-      box-shadow: 0 0 25px rgba(255, 85, 0, 0.4);
-    }
-
-    .btn-solid::before {
-      display: none;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .glass-panel {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: var(--border-glow);
-      border-radius: var(--radius-md);
-      transition: var(--transition);
-    }
-
-    .glass-panel:hover {
-      border: var(--border-active);
-      box-shadow: 0 8px 32px rgba(139, 0, 255, 0.15);
-    }
-
-    /* ==========================================================
-       NAVIGATION HEADER
-       ========================================================== */
-    .site-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: rgba(7, 3, 12, 0.85);
-      border-bottom: 1px solid rgba(139, 0, 255, 0.2);
-      transition: var(--transition);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 76px;
-    }
-
-    .brand-logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 0 15px var(--neon-purple-glow);
-      border: 1px solid rgba(255, 85, 0, 0.5);
-    }
-
-    .brand-title {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #fff, #ff5500);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links {
-      display: none;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    @media (min-width: 900px) {
-      .nav-links { display: flex; }
-    }
-
-    .nav-link:hover {
-      color: var(--neon-orange);
-    }
-
-    /* ==========================================================
-       HERO SECTION
-       ========================================================== */
-    .hero-section {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 130px 0 70px 0;
-      overflow: hidden;
-    }
-
-    .hero-glow-orb {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 0, 68, 0.2) 0%, rgba(139, 0, 255, 0.1) 50%, transparent 70%);
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      filter: blur(60px);
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-
-    @media (min-width: 992px) {
-      .hero-grid {
-        grid-template-columns: 1.2fr 0.8fr;
-      }
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 50px;
-      background: rgba(255, 85, 0, 0.1);
-      border: 1px solid rgba(255, 85, 0, 0.3);
-      color: #ffaa80;
-      font-family: var(--font-heading);
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
-    .hero-badge .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--neon-red);
-      box-shadow: 0 0 10px var(--neon-red);
-      animation: blink 1.4s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-
-    .hero-title span {
-      background: linear-gradient(90deg, #ff5500, #ff0044, #8b00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(255, 85, 0, 0.3);
-    }
-
-    .hero-desc {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 540px;
-      margin-bottom: 35px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .app-meta-pills {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      max-width: 520px;
-    }
-
-    @media (min-width: 576px) {
-      .app-meta-pills {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .meta-pill {
-      background: rgba(18, 9, 32, 0.5);
-      border: 1px solid rgba(139, 0, 255, 0.2);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      text-align: center;
-    }
-
-    .meta-pill .val {
-      font-family: var(--font-display);
-      font-weight: 700;
-      color: #fff;
-      font-size: 1.15rem;
-    }
-
-    .meta-pill .lbl {
-      font-family: var(--font-heading);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* ==========================================================
-       SMARTPHONE MOCKUP & IMAGE SLIDER
-       ========================================================== */
-    .phone-showcase-wrap {
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
-
-    .smartphone-mockup {
-      width: 100%;
-      max-width: 320px;
-      height: 620px;
-      background: #000;
-      border-radius: 46px;
-      padding: 12px;
-      position: relative;
-      box-shadow: 
-        0 0 0 3px #281640,
-        0 0 0 6px #10061e,
-        0 25px 50px -12px rgba(0, 0, 0, 0.9),
-        0 0 45px var(--neon-purple-glow);
-    }
-
-    .phone-island {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 22px;
-      background: #000;
-      border-radius: 20px;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .phone-lens {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #0b1526;
-      border: 1px solid #1a2c47;
-    }
-
-    .phone-screen {
-      width: 100%;
-      height: 100%;
-      background: #090312;
-      border-radius: 36px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* SLIDER COMPONENT */
-    .slider-track {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .slider-slide {
-      min-width: 100%;
-      height: 100%;
-      position: relative;
-      background-color: #0c0517;
-    }
-
-    .slider-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-    }
-
-    .slider-controls {
-      position: absolute;
-      bottom: 24px;
-      left: 0;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      z-index: 15;
-    }
-
-    .slider-arrow {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(10, 4, 18, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 85, 0, 0.4);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-      user-select: none;
-    }
-
-    .slider-arrow:hover {
-      background: var(--neon-orange);
-      transform: scale(1.1);
-    }
-
-    .slider-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .slider-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .slider-dot.active {
-      width: 22px;
-      border-radius: 8px;
-      background: var(--neon-orange);
-      box-shadow: 0 0 10px var(--neon-orange);
-    }
-
-    /* ==========================================================
-       STATS COUNTERS
-       ========================================================== */
-    .stats-section {
-      padding: 60px 0;
-      position: relative;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    @media (min-width: 768px) {
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .stat-card {
-      padding: 28px 20px;
-      text-align: center;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--neon-orange), var(--neon-red), var(--neon-purple));
-    }
-
-    .stat-number {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
-    }
-
-    .stat-label {
-      font-family: var(--font-heading);
-      font-size: 1rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    /* ==========================================================
-       CATEGORIES SECTION
-       ========================================================== */
-    .categories-section {
-      padding: 80px 0;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .category-card {
-      padding: 32px 24px;
-      border-radius: var(--radius-md);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .category-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .cat-icon-box {
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(255, 85, 0, 0.2), rgba(139, 0, 255, 0.2));
-      border: 1px solid rgba(255, 85, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-    }
-
-    .cat-title {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .cat-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-      flex-grow: 1;
-    }
-
-    /* ==========================================================
-       UPCOMING TOURNAMENTS
-       ========================================================== */
-    .tournaments-section {
-      padding: 80px 0;
-    }
-
-    .tournament-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 26px;
-    }
-
-    .tourney-card {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .tourney-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .tourney-banner {
-      position: relative;
-      height: 160px;
-      overflow: hidden;
-    }
-
-    .tourney-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .tourney-card:hover .tourney-banner img {
-      transform: scale(1.08);
-    }
-
-    .tourney-tag {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      color: var(--neon-orange);
-      border: 1px solid var(--neon-orange);
-    }
-
-    .countdown-chip {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      background: rgba(7, 3, 12, 0.85);
-      border: 1px solid rgba(255, 0, 68, 0.4);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: #ff99aa;
-    }
-
-    .tourney-content {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .tourney-name {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .tourney-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      background: rgba(7, 3, 12, 0.5);
-      padding: 14px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 18px;
-    }
-
-    .t-stat-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-family: var(--font-heading);
-      letter-spacing: 0.5px;
-    }
-
-    .t-stat-val {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .slots-progress-wrap {
-      margin-bottom: 20px;
-    }
-
-    .slots-text {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      font-family: var(--font-heading);
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--neon-orange), var(--neon-red));
-      border-radius: 10px;
-    }
-
-    /* ==========================================================
-       WHY CHOOSE US / FEATURES
-       ========================================================== */
-    .features-section {
-      padding: 80px 0;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .feature-card {
-      padding: 30px;
-      border-radius: var(--radius-md);
-      text-align: left;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .feat-icon {
-      font-size: 2rem;
-      margin-bottom: 16px;
-      display: inline-block;
-    }
-
-    .feat-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .feat-desc {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* ==========================================================
-       WINNERS SECTION
-       ========================================================== */
-    .winners-section {
-      padding: 80px 0;
-    }
-
-    .winners-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .winner-card {
-      padding: 26px 20px;
-      text-align: center;
-      position: relative;
-      border-radius: var(--radius-md);
-    }
-
-    .trophy-badge {
-      font-size: 2.2rem;
-      display: inline-block;
-      animation: floatTrophy 3s ease-in-out infinite;
-      margin-bottom: 12px;
-    }
-
-    @keyframes floatTrophy {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .winner-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      margin: 0 auto 14px auto;
-      border: 2px solid var(--neon-orange);
-      box-shadow: 0 0 15px var(--neon-orange-glow);
-      object-fit: cover;
-    }
-
-    .winner-name {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .winner-tourney {
-      font-family: var(--font-heading);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .winner-prize {
-      display: inline-block;
-      padding: 6px 18px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, rgba(255, 85, 0, 0.2), rgba(255, 0, 68, 0.2));
-      border: 1px solid var(--neon-red);
-      font-family: var(--font-display);
-      font-weight: 800;
-      color: #ff99aa;
-      font-size: 1.05rem;
-    }
-
-    /* ==========================================================
-       HOW TO PLAY (STEPS)
-       ========================================================== */
-    .steps-section {
-      padding: 80px 0;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      position: relative;
-    }
-
-    .step-card {
-      padding: 30px 20px;
-      border-radius: var(--radius-md);
-      position: relative;
-      text-align: center;
-    }
-
-    .step-num {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--neon-orange), var(--neon-purple));
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 18px auto;
-      box-shadow: 0 0 20px var(--neon-purple-glow);
-    }
-
-    .step-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .step-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* ==========================================================
-       TESTIMONIALS
-       ========================================================== */
-    .testimonials-section {
-      padding: 80px 0;
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .review-card {
-      padding: 26px;
-      border-radius: var(--radius-md);
-    }
-
-    .review-stars {
-      color: #ffbb00;
-      font-size: 1.1rem;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
-    }
-
-    .review-quote {
-      font-size: 0.95rem;
-      color: var(--text-main);
-      font-style: italic;
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-
-    .reviewer-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .reviewer-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 1px solid rgba(139, 0, 255, 0.4);
-    }
-
-    .reviewer-name {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-
-    .reviewer-role {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* ==========================================================
-       FAQ SECTION (ACCORDION)
-       ========================================================== */
-    .faq-section {
-      padding: 80px 0;
-    }
-
-    .faq-accordion {
-      max-width: 820px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .faq-item {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-
-    .faq-question {
-      width: 100%;
-      padding: 22px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      text-align: left;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      transition: var(--transition);
-    }
-
-    .faq-question:hover {
-      color: var(--neon-orange);
-    }
-
-    .faq-icon-cross {
-      font-size: 1.4rem;
-      font-weight: 300;
-      transition: transform 0.3s ease;
-      color: var(--neon-orange);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      padding: 0 24px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      transition: max-height 0.35s ease, padding 0.35s ease;
-    }
-
-    .faq-item.open .faq-answer {
-      max-height: 250px;
-      padding-bottom: 22px;
-    }
-
-    .faq-item.open .faq-icon-cross {
-      transform: rotate(45deg);
-      color: var(--neon-red);
-    }
-
-    /* ==========================================================
-       FOOTER
-       ========================================================== */
-    .site-footer {
-      background: #040108;
-      border-top: 1px solid rgba(139, 0, 255, 0.2);
-      padding: 60px 0 30px 0;
-      margin-top: 60px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 36px;
-      margin-bottom: 40px;
-    }
-
-    @media (min-width: 768px) {
-      .footer-grid {
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
-      }
-    }
-
-    .footer-col-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      margin-bottom: 18px;
-      color: #fff;
-      letter-spacing: 1px;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      color: var(--neon-orange);
-      padding-left: 4px;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-      color: #6d6380;
-      font-size: 0.85rem;
-    }
-
-    @media (min-width: 600px) {
-      .footer-bottom {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-
-    /* ==========================================================
-       PERMANENT FLOATING BOTTOM DOWNLOAD BAR
-       ========================================================== */
-    .permanent-floating-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      z-index: 9999;
-      background: rgba(10, 4, 18, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255, 85, 0, 0.4);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--neon-orange-glow);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      animation: barGlow 3s infinite alternate;
-    }
-
-    @keyframes barGlow {
-      0% { border-color: rgba(255, 85, 0, 0.4); }
-      100% { border-color: rgba(139, 0, 255, 0.7); }
-    }
-
-    .floating-bar-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .floating-bar-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      border: 1px solid var(--neon-orange);
-      object-fit: cover;
-    }
-
-    .floating-bar-text h4 {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      line-height: 1.2;
-      color: #fff;
-    }
-
-    .floating-bar-text p {
-      font-size: 0.75rem;
-      color: #38ef7d;
-      font-weight: 600;
-    }
-
-    .floating-download-action {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* ==========================================================
-       TOAST / NOTIFICATION FOR REAL APK DOWNLOAD
-       ========================================================== */
-    .toast-msg {
-      position: fixed;
-      top: 90px;
-      right: 20px;
-      max-width: 360px;
-      padding: 16px 20px;
-      border-radius: var(--radius-sm);
-      background: #140924;
-      border: 1px solid var(--neon-purple);
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      z-index: 10001;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      transform: translateX(120%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .toast-msg.show {
-      transform: translateX(0);
-    }
-
-    .toast-msg.error {
-      border-color: var(--neon-red);
-      background: #20060e;
-    }
-
-    .toast-msg.success {
-      border-color: #00ff88;
-      background: #032015;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimo Ai - Official Website</title>
+    <style>
+        /* ================= COMMON STYLES & VARIABLES ================= */
+        :root {
+            --bg-dark: #0a0c10;
+            --bg-panel: #141822;
+            --bg-card: #1c2231;
+            --text-main: #ffffff;
+            --text-muted: #8b92a5;
+            --primary-green: #00ff88;
+            --primary-blue: #3b82f6;
+            --danger: #ef4444;
+            --border-color: #2a3143;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+        
+        button { cursor: pointer; border: none; outline: none; transition: 0.2s; font-weight: 600; }
+        input, textarea { width: 100%; padding: 12px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: white; margin-top: 5px; margin-bottom: 15px; font-size: 14px; }
+        input:focus, textarea:focus { border-color: var(--primary-blue); outline: none; }
+        
+        /* ================= USER SITE STYLES ================= */
+        #user-site { display: block; }
+        
+        /* Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(10, 12, 16, 0.95); position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary-green); cursor: pointer; letter-spacing: 1px; }
+        
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 100px 20px 40px; background: radial-gradient(circle at top center, #1c2231 0%, var(--bg-dark) 70%); }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
+        .hero-title { color: var(--primary-green); font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; }
+        .hero p.desc { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; }
+        .btn-download { background: var(--primary-green); color: #000; padding: 15px 40px; font-size: 18px; border-radius: 30px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3); display: inline-block; text-decoration: none; }
+        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5); }
+        .version-tag { margin-top: 15px; font-size: 14px; color: var(--text-muted); background: var(--bg-card); padding: 5px 15px; border-radius: 20px; display: inline-block; }
+
+        /* Screenshots Section */
+        .screenshots-section { padding: 60px 20px; text-align: center; background: var(--bg-panel); }
+        .screenshots-section h2 { font-size: 2rem; margin-bottom: 40px; }
+        .screenshot-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 20px; max-width: 1200px; margin: 0 auto; scroll-snap-type: x mandatory; }
+        .screenshot-gallery img { height: 400px; border-radius: 15px; border: 2px solid var(--border-color); scroll-snap-align: center; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: 0.3s; }
+        .screenshot-gallery img:hover { transform: scale(1.02); border-color: var(--primary-green); }
+        .no-data { color: var(--text-muted); font-style: italic; width: 100%; }
+
+        /* ================= ADMIN PANEL STYLES ================= */
+        #admin-site { display: none; height: 100vh; background: var(--bg-dark); flex-direction: row; }
+        
+        /* Admin Sidebar */
+        .admin-sidebar { width: 260px; background: var(--bg-panel); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .admin-brand { padding: 20px; font-size: 20px; font-weight: bold; border-bottom: 1px solid var(--border-color); color: var(--primary-blue); }
+        .admin-menu { list-style: none; padding: 20px 0; flex: 1; }
+        .admin-menu li { padding: 15px 20px; cursor: pointer; color: var(--text-muted); transition: 0.2s; border-left: 3px solid transparent; }
+        .admin-menu li:hover { background: var(--bg-card); color: white; }
+        .admin-menu li.active { background: rgba(59, 130, 246, 0.1); color: var(--primary-blue); border-left-color: var(--primary-blue); }
+        .admin-bottom { padding: 20px; border-top: 1px solid var(--border-color); }
+        .btn-exit { width: 100%; background: var(--danger); color: white; padding: 12px; border-radius: 8px; }
+
+        /* Admin Main Area */
+        .admin-main { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; }
+        .admin-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .admin-header-top h1 { font-size: 24px; font-weight: 600; }
+        
+        /* Admin Sections */
+        .admin-section { display: none; animation: fadeIn 0.3s ease; }
+        .admin-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+        .card h2 { margin-bottom: 20px; font-size: 18px; color: var(--primary-blue); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        
+        .btn-primary { background: var(--primary-blue); color: white; padding: 12px 24px; border-radius: 8px; font-size: 15px; }
+        .btn-primary:hover { background: #2563eb; }
+        
+        .btn-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); padding: 8px 15px; border-radius: 6px; font-size: 12px; }
+        .btn-danger:hover { background: var(--danger); color: white; }
+
+        /* Screenshot Manager */
+        .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
+        .ss-item { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); height: 180px; }
+        .ss-item img { width: 100%; height: 100%; object-fit: cover; }
+        .ss-delete { position: absolute; top: 5px; right: 5px; background: var(--danger); color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; border: none; }
+        
+        /* APK Manager */
+        .apk-file-info { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 15px; }
+        .file-icon { font-size: 24px; margin-right: 15px; }
+        
+        /* Upload Area */
+        .upload-box { border: 2px dashed var(--border-color); border-radius: 10px; padding: 30px; text-align: center; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.02); }
+        .upload-box:hover { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.05); }
+        
+        /* Bottom Nav for Mobile */
+        .mobile-nav { display: none; }
+        
+        @media (max-width: 768px) {
+            .admin-sidebar { display: none; }
+            .mobile-nav { display: flex; justify-content: space-around; background: var(--bg-panel); border-top: 1px solid var(--border-color); position: fixed; bottom: 0; width: 100%; padding: 10px 0; z-index: 100; }
+            .mobile-nav div { color: var(--text-muted); font-size: 12px; text-align: center; cursor: pointer; }
+            .mobile-nav div.active { color: var(--primary-blue); }
+            .admin-main { padding: 15px; padding-bottom: 80px; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ==========================================
-       TOP NAVIGATION BAR
-       ========================================== -->
-  <header class="site-nav">
-    <div class="container nav-inner">
-      <div class="brand-logo-wrap">
-        <img src="" alt="App Logo" class="brand-logo-img dynamic-app-logo">
-        <span class="brand-title dynamic-app-name">GamerX</span>
-      </div>
+    <!-- ================= USER SITE ================= -->
+    <div id="user-site">
+        <nav class="navbar">
+            <!-- Admin Login via Double Click -->
+            <div class="logo" ondblclick="openAdmin()" id="nav-app-name">Mimo Ai</div>
+            <div style="font-size: 14px; color: var(--text-muted);">Official Download</div>
+        </nav>
 
-      <ul class="nav-links">
-        <li><a href="#tournaments" class="nav-link">Tournaments</a></li>
-        <li><a href="#preview" class="nav-link">App Preview</a></li>
-        <li><a href="#features" class="nav-link">Why Us</a></li>
-        <li><a href="#winners" class="nav-link">Winners</a></li>
-        <li><a href="#how-to-play" class="nav-link">How To Play</a></li>
-        <li><a href="#faq" class="nav-link">FAQ</a></li>
-      </ul>
+        <header class="hero">
+            <h1 id="hero-app-name">Mimo Ai</h1>
+            <div class="hero-title" id="hero-title">Your Voice My World</div>
+            <p class="desc" id="hero-desc">Experience the next generation of AI companion. Talk, share your screen, and automate your daily tasks with Mimo Ai.</p>
+            
+            <a href="#" id="download-btn" class="btn-download" onclick="handleDownload(event)">Download APK</a>
+            <div class="version-tag" id="hero-version">Version 1.0.0 | Size: 0 MB</div>
+        </header>
 
-      <button class="btn-cyber download-trigger-btn" type="button">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        <span>Get APK</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- ==========================================
-       HERO SECTION
-       ========================================== -->
-  <section class="hero-section" id="hero">
-    <div class="hero-glow-orb"></div>
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="pulse-dot"></span>
-            <span>VERIFIED ESPORTS PLATFORM</span>
-          </div>
-
-          <h1 class="hero-title">
-            Dominate The <br>
-            <span>Battleground</span>
-          </h1>
-
-          <p class="hero-desc">
-            Join Epic Free Fire Tournaments &amp; Win Exciting Rewards. Compete against top squad leaders, rank up your battle stats, and instantly withdraw your daily earnings with zero commission.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn-cyber btn-solid download-trigger-btn" type="button" style="padding: 16px 36px; font-size: 1.05rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-              <span>Download APK</span>
-            </button>
-            <a href="#tournaments" class="btn-cyber" style="padding: 16px 28px;">
-              <span>Explore Battles</span>
-            </a>
-          </div>
-
-          <div class="app-meta-pills">
-            <div class="meta-pill">
-              <div class="val">500+</div>
-              <div class="lbl">Matches</div>
+        <section class="screenshots-section">
+            <h2>App Screenshots</h2>
+            <div class="screenshot-gallery" id="user-screenshot-gallery">
+                <!-- Screenshots will be injected here via JS -->
             </div>
-            <div class="meta-pill">
-              <div class="val">10K+</div>
-              <div class="lbl">Warriors</div>
-            </div>
-            <div class="meta-pill">
-              <div class="val">₹5L+</div>
-              <div class="lbl">Prize Pool</div>
-            </div>
-            <div class="meta-pill">
-              <div class="val">★ 4.8</div>
-              <div class="lbl">App Rating</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- HERO RIGHT: QUICK GLIMPSE -->
-        <div class="phone-showcase-wrap" style="align-items: center;">
-          <div class="smartphone-mockup" style="transform: scale(0.95); margin: 0 auto;">
-            <div class="phone-island">
-              <div class="phone-lens"></div>
-            </div>
-            <div class="phone-screen">
-              <div class="slider-track hero-mini-slider" id="heroMiniSlider">
-                <!-- Dynamically populated from APP_SCREENSHOTS -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       MOBILE APP PREVIEW SECTION (SLIDER MOCKUP)
-       ========================================== -->
-  <section class="mobile-preview-section" id="preview" style="padding: 90px 0; position: relative;">
-    <div class="container">
-      <h2 class="section-title">App Interface Preview</h2>
-      <p class="section-subtitle">Ultra smooth gaming UI crafted for pure performance &amp; instant matchmaking</p>
-
-      <div class="phone-showcase-wrap">
-        <div class="smartphone-mockup" id="phoneContainer">
-          <div class="phone-island">
-            <div class="phone-lens"></div>
-          </div>
-
-          <div class="phone-screen">
-            <div class="slider-track" id="mainSliderTrack">
-              <!-- Dynamically populated with APP_SCREENSHOTS -->
-            </div>
-
-            <!-- SLIDER NAVIGATION CONTROLS -->
-            <div class="slider-controls">
-              <button class="slider-arrow" id="prevSlideBtn" aria-label="Previous Screenshot">&#10094;</button>
-              <div class="slider-dots" id="sliderDotsWrap"></div>
-              <button class="slider-arrow" id="nextSlideBtn" aria-label="Next Screenshot">&#10095;</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       TOURNAMENT STATISTICS (ANIMATED COUNTERS)
-       ========================================== -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="glass-panel stat-card">
-          <div class="stat-number" data-target="500" data-suffix="+">0</div>
-          <div class="stat-label">Total Tournaments</div>
-        </div>
-        <div class="glass-panel stat-card">
-          <div class="stat-number" data-target="10000" data-suffix="+">0</div>
-          <div class="stat-label">Total Players</div>
-        </div>
-        <div class="glass-panel stat-card">
-          <div class="stat-number" data-target="500000" data-prefix="₹" data-suffix="+">0</div>
-          <div class="stat-label">Prize Distributed</div>
-        </div>
-        <div class="glass-panel stat-card">
-          <div class="stat-number" data-target="2500" data-suffix="+">0</div>
-          <div class="stat-label">Active Players</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       TOURNAMENT CATEGORIES
-       ========================================== -->
-  <section class="categories-section" id="categories">
-    <div class="container">
-      <h2 class="section-title">Battle Formats</h2>
-      <p class="section-subtitle">Pick your preferred arena combat format and rule the leaderboards</p>
-
-      <div class="category-grid">
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">🎯</div>
-            <h3 class="cat-title">Solo Tournament</h3>
-            <p class="cat-desc">One lone wolf against 47 other players. Only the most lethal survive to claim glory.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">👥</div>
-            <h3 class="cat-title">Duo Tournament</h3>
-            <p class="cat-desc">Tag along with your best marksman partner. Flank, assist, and dominate the island.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">🛡️</div>
-            <h3 class="cat-title">Squad Tournament</h3>
-            <p class="cat-desc">4v4 full squad warfare. Tactical communication, smoke cover, and coordinated rushes.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">⚔️</div>
-            <h3 class="cat-title">Clash Squad</h3>
-            <p class="cat-desc">Fast-paced 7-round intense battle. Economy buy rounds, headshots, and pure reflexes.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">🪂</div>
-            <h3 class="cat-title">Battle Royale</h3>
-            <p class="cat-desc">The classic 50-player survival rush with competitive custom room settings and rules.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-
-        <div class="glass-panel category-card">
-          <div>
-            <div class="cat-icon-box">🎁</div>
-            <h3 class="cat-title">Free Entry Tournament</h3>
-            <p class="cat-desc">Zero entry fee, 100% genuine real cash rewards for beginners to build their bankroll.</p>
-          </div>
-          <button class="btn-cyber download-trigger-btn">Join Tournament</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       UPCOMING TOURNAMENTS (WITH LIVE COUNTDOWN)
-       ========================================== -->
-  <section class="tournaments-section" id="tournaments">
-    <div class="container">
-      <h2 class="section-title">Upcoming Tournaments</h2>
-      <p class="section-subtitle">Lock in your slots before the custom lobby fills up completely</p>
-
-      <div class="tournament-grid">
-        <!-- Tournament 1 -->
-        <div class="glass-panel tourney-card">
-          <div class="tourney-banner">
-            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=700&q=80" alt="Bermuda Championship">
-            <span class="tourney-tag">SQUAD • BERMUDA</span>
-            <div class="countdown-chip" data-timer="3200">Starting in: 00h 53m 20s</div>
-          </div>
-          <div class="tourney-content">
-            <h3 class="tourney-name">Bermuda Pro Clash Cup</h3>
-            <div class="tourney-stats-grid">
-              <div>
-                <div class="t-stat-label">Entry Fee</div>
-                <div class="t-stat-val" style="color:#00ffaa;">₹50 / Player</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Prize Pool</div>
-                <div class="t-stat-val" style="color:#ffbb00;">₹5,000</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Match Date</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Today, 08:30 PM</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Map</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Bermuda</div>
-              </div>
-            </div>
-            <div class="slots-progress-wrap">
-              <div class="slots-text">
-                <span>Slots Filled</span>
-                <span style="color:var(--neon-orange);">42 / 48</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: 87.5%;"></div>
-              </div>
-            </div>
-            <button class="btn-cyber btn-solid download-trigger-btn">Join Now</button>
-          </div>
-        </div>
-
-        <!-- Tournament 2 -->
-        <div class="glass-panel tourney-card">
-          <div class="tourney-banner">
-            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=80" alt="Kalahari Snipers Cup">
-            <span class="tourney-tag">DUO • KALAHARI</span>
-            <div class="countdown-chip" data-timer="7240">Starting in: 02h 00m 40s</div>
-          </div>
-          <div class="tourney-content">
-            <h3 class="tourney-name">Kalahari Desert Snipers</h3>
-            <div class="tourney-stats-grid">
-              <div>
-                <div class="t-stat-label">Entry Fee</div>
-                <div class="t-stat-val" style="color:#00ffaa;">₹30 / Team</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Prize Pool</div>
-                <div class="t-stat-val" style="color:#ffbb00;">₹3,200</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Match Date</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Today, 09:45 PM</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Map</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Kalahari</div>
-              </div>
-            </div>
-            <div class="slots-progress-wrap">
-              <div class="slots-text">
-                <span>Slots Filled</span>
-                <span style="color:var(--neon-orange);">36 / 50</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: 72%;"></div>
-              </div>
-            </div>
-            <button class="btn-cyber btn-solid download-trigger-btn">Join Now</button>
-          </div>
-        </div>
-
-        <!-- Tournament 3 -->
-        <div class="glass-panel tourney-card">
-          <div class="tourney-banner">
-            <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=700&q=80" alt="Mega Free Entry Royale">
-            <span class="tourney-tag" style="color:#00ffaa; border-color:#00ffaa;">FREE ENTRY • SOLO</span>
-            <div class="countdown-chip" data-timer="14400">Starting in: 04h 00m 00s</div>
-          </div>
-          <div class="tourney-content">
-            <h3 class="tourney-name">Midnight Free Battle</h3>
-            <div class="tourney-stats-grid">
-              <div>
-                <div class="t-stat-label">Entry Fee</div>
-                <div class="t-stat-val" style="color:#00ffaa;">₹0 FREE</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Prize Pool</div>
-                <div class="t-stat-val" style="color:#ffbb00;">₹1,500</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Match Date</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Tonight, 11:30 PM</div>
-              </div>
-              <div>
-                <div class="t-stat-label">Map</div>
-                <div class="t-stat-val" style="font-size:0.9rem;">Purgatory</div>
-              </div>
-            </div>
-            <div class="slots-progress-wrap">
-              <div class="slots-text">
-                <span>Slots Filled</span>
-                <span style="color:var(--neon-orange);">48 / 50</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: 96%;"></div>
-              </div>
-            </div>
-            <button class="btn-cyber btn-solid download-trigger-btn">Join Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       WHY CHOOSE OUR APP
-       ========================================== -->
-  <section class="features-section" id="features">
-    <div class="container">
-      <h2 class="section-title">Why Choose <span class="dynamic-app-name">GamerX</span></h2>
-      <p class="section-subtitle">Engineered for competitive players who demand fairness and instant rewards</p>
-
-      <div class="feature-grid">
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">⚡</div>
-          <h3 class="feat-title">Instant Registration</h3>
-          <p class="feat-desc">Enter any tournament lobby in less than 5 seconds. Automated room credentials sent via in-app push notifications.</p>
-        </div>
-
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">🛡️</div>
-          <h3 class="feat-title">Fair Gameplay</h3>
-          <p class="feat-desc">Zero tolerance for emulators or hacks. Manual spectator audits and anti-cheat verify all match replay results.</p>
-        </div>
-
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">💸</div>
-          <h3 class="feat-title">Fast Withdrawals</h3>
-          <p class="feat-desc">Cash out your earnings directly to UPI, Paytm, or your Bank Account within minutes without any hidden fees.</p>
-        </div>
-
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">🏆</div>
-          <h3 class="feat-title">Exciting Rewards</h3>
-          <p class="feat-desc">Score per-kill bounties, Booyah bonuses, custom esports jerseys, and entry passes to verified national qualifiers.</p>
-        </div>
-
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">🔒</div>
-          <h3 class="feat-title">Secure Payments</h3>
-          <p class="feat-desc">Bank-grade 256-bit encryption through certified gateways. Your transaction records and funds are completely protected.</p>
-        </div>
-
-        <div class="glass-panel feature-card">
-          <div class="feat-icon">🎧</div>
-          <h3 class="feat-title">24/7 Live Support</h3>
-          <p class="feat-desc">Dedicated human moderators on Telegram and in-app chat ready to solve any room ID or withdrawal ticket 24 hours a day.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       WINNERS SHOWCASE
-       ========================================== -->
-  <section class="winners-section" id="winners">
-    <div class="container">
-      <h2 class="section-title">Champions Showcase</h2>
-      <p class="section-subtitle">Meet the gladiators who clinched Booyahs and earned big this week</p>
-
-      <div class="winners-grid">
-        <div class="glass-panel winner-card">
-          <div class="trophy-badge">🏆</div>
-          <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=150&q=80" alt="Winner 1" class="winner-avatar">
-          <div class="winner-name">OP_KILLER_99</div>
-          <div class="winner-tourney">Bermuda Grand Finale</div>
-          <div class="winner-prize">Won ₹15,000</div>
-        </div>
-
-        <div class="glass-panel winner-card">
-          <div class="trophy-badge">🥇</div>
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Winner 2" class="winner-avatar">
-          <div class="winner-name">VIPER_ESPORTS</div>
-          <div class="winner-tourney">Squad Clash of Titans</div>
-          <div class="winner-prize">Won ₹24,000</div>
-        </div>
-
-        <div class="glass-panel winner-card">
-          <div class="trophy-badge">👑</div>
-          <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80" alt="Winner 3" class="winner-avatar">
-          <div class="winner-name">SHADOW_SNIPER</div>
-          <div class="winner-tourney">Kalahari Solo Championship</div>
-          <div class="winner-prize">Won ₹8,500</div>
-        </div>
-
-        <div class="glass-panel winner-card">
-          <div class="trophy-badge">🎖️</div>
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80" alt="Winner 4" class="winner-avatar">
-          <div class="winner-name">ROXY_GAMING</div>
-          <div class="winner-tourney">Clash Squad Invitational</div>
-          <div class="winner-prize">Won ₹10,000</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       HOW TO PLAY (4 EASY STEPS)
-       ========================================== -->
-  <section class="steps-section" id="how-to-play">
-    <div class="container">
-      <h2 class="section-title">How To Play</h2>
-      <p class="section-subtitle">Jump from download to winning real cash prizes in 4 simple moves</p>
-
-      <div class="steps-grid">
-        <div class="glass-panel step-card">
-          <div class="step-num">1</div>
-          <h3 class="step-title">Download APK</h3>
-          <p class="step-desc">Grab the verified APK file directly onto your Android device and install it smoothly.</p>
-        </div>
-
-        <div class="glass-panel step-card">
-          <div class="step-num">2</div>
-          <h3 class="step-title">Create Account</h3>
-          <p class="step-desc">Sign up with your mobile number and add your Free Fire in-game username &amp; UID.</p>
-        </div>
-
-        <div class="glass-panel step-card">
-          <div class="step-num">3</div>
-          <h3 class="step-title">Join Tournament</h3>
-          <p class="step-desc">Pick your match format, join room using custom credentials 15 mins before match start.</p>
-        </div>
-
-        <div class="glass-panel step-card">
-          <div class="step-num">4</div>
-          <h3 class="step-title">Win Exciting Rewards</h3>
-          <p class="step-desc">Eliminate rivals, secure Booyah, and withdraw your prize winnings directly to your UPI.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       TESTIMONIALS
-       ========================================== -->
-  <section class="testimonials-section">
-    <div class="container">
-      <h2 class="section-title">Player Testimonials</h2>
-      <p class="section-subtitle">Real feedback from daily tournament grinders and competitive squads</p>
-
-      <div class="testimonials-grid">
-        <div class="glass-panel review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Best platform I've ever played Free Fire on. The room ID was delivered 15 mins prior, no lag, and my ₹1,200 winning was credited to my UPI in 5 minutes."</p>
-          <div class="reviewer-meta">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Player 1" class="reviewer-img">
-            <div>
-              <div class="reviewer-name">Rahul "Ghost" S.</div>
-              <div class="reviewer-role">Solo Grind Master</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass-panel review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Finally an app that bans hackers quickly! Their spectator referee team is super responsive. My clan participates in every weekend squad tournament."</p>
-          <div class="reviewer-meta">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Player 2" class="reviewer-img">
-            <div>
-              <div class="reviewer-name">Aakash "SniperGod"</div>
-              <div class="reviewer-role">Clan Leader</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass-panel review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"I started with the Free Entry tournaments without spending a single rupee. Now I enter paid squad matches daily. Highly recommended for all FF players!"</p>
-          <div class="reviewer-meta">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Player 3" class="reviewer-img">
-            <div>
-              <div class="reviewer-name">Devendra "Proff" V.</div>
-              <div class="reviewer-role">Esports Contender</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       FAQ SECTION (ACCORDION)
-       ========================================== -->
-  <section class="faq-section" id="faq">
-    <div class="container">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <p class="section-subtitle">Everything you need to know about getting started, matches, and payouts</p>
-
-      <div class="faq-accordion">
-        <div class="glass-panel faq-item">
-          <button class="faq-question">
-            <span>How to download the app?</span>
-            <span class="faq-icon-cross">+</span>
-          </button>
-          <div class="faq-answer">
-            Simply click on the "Download APK" button anywhere on this website. Save the APK file, tap on it in your notification drawer or Downloads folder, and grant "Install Unknown Apps" permission to complete installation.
-          </div>
-        </div>
-
-        <div class="glass-panel faq-item">
-          <button class="faq-question">
-            <span>How to join tournaments?</span>
-            <span class="faq-icon-cross">+</span>
-          </button>
-          <div class="faq-answer">
-            Open the app, browse the match schedule, and tap "Join". Provide your exact Free Fire IGN (in-game name) and UID. The custom Room ID and Password will be displayed inside your app ticket 15 minutes before the match start time.
-          </div>
-        </div>
-
-        <div class="faq-answer-dummy faq-item glass-panel">
-          <button class="faq-question">
-            <span>How to win rewards?</span>
-            <span class="faq-icon-cross">+</span>
-          </button>
-          <div class="faq-answer">
-            You earn rewards for both your match placement rank (such as 1st, 2nd, 3rd) and per-kill bounties. Once the match finishes, our automated scoring audits the lobby kill logs and credits rewards directly to your in-app wallet within 30 minutes.
-          </div>
-        </div>
-
-        <div class="glass-panel faq-item">
-          <button class="faq-question">
-            <span>How to withdraw winnings?</span>
-            <span class="faq-icon-cross">+</span>
-          </button>
-          <div class="faq-answer">
-            Navigate to the "Wallet" tab in the app, click "Withdraw", enter your UPI ID (Google Pay, PhonePe, Paytm) or Bank Account details, and submit. Payouts are processed instantly with zero deduction.
-          </div>
-        </div>
-
-        <div class="glass-panel faq-item">
-          <button class="faq-question">
-            <span>Is registration free?</span>
-            <span class="faq-icon-cross">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes! Account registration is 100% free forever. We also host multiple Free Entry tournaments daily where players can compete and win real prizes without any deposit.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       FOOTER
-       ========================================== -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand-info">
-          <div class="brand-logo-wrap" style="margin-bottom: 14px;">
-            <img src="" alt="App Logo" class="brand-logo-img dynamic-app-logo">
-            <span class="brand-title dynamic-app-name">GamerX</span>
-          </div>
-          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; max-width: 320px;">
-            The premier Free Fire esports tournament arena in South Asia. Join thousands of warriors, compete in fair battlegrounds, and unlock your true esports career.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="footer-col-title">Navigation</h4>
-          <ul class="footer-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#tournaments">Tournaments</a></li>
-            <li><a href="#preview">App Screenshots</a></li>
-            <li><a href="#how-to-play">How To Play</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-col-title">Legal &amp; Policy</h4>
-          <ul class="footer-links">
-            <li><a href="#hero">About Us</a></li>
-            <li><a href="#hero">Privacy Policy</a></li>
-            <li><a href="#hero">Terms &amp; Conditions</a></li>
-            <li><a href="#hero">Fair Play Guidelines</a></li>
-            <li><a href="#hero">Refund Policy</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-col-title">Community</h4>
-          <ul class="footer-links">
-            <li><a href="https://t.me/" target="_blank" rel="noopener">Telegram Community ↗</a></li>
-            <li><a href="#hero">Discord Server ↗</a></li>
-            <li><a href="#hero">YouTube Live ↗</a></li>
-            <li><a href="#hero">Instagram Esports ↗</a></li>
-            <li><a href="#hero">Contact Support</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>
-          &copy; <span id="currentYear"></span> <span class="dynamic-app-name">GamerX</span> Esports. All Rights Reserved.
-        </div>
-        <div style="font-size: 0.78rem;">
-          Disclaimer: This platform is not officially affiliated with Garena or Free Fire. All trademarks belong to their respective owners.
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==========================================
-       PERMANENT FLOATING BOTTOM DOWNLOAD BAR
-       (Always visible, fixed at viewport bottom)
-       ========================================== -->
-  <aside class="permanent-floating-bar" id="floatingBar" aria-label="Quick Download Bar">
-    <div class="floating-bar-info">
-      <img src="" alt="App Logo" class="floating-bar-logo dynamic-app-logo">
-      <div class="floating-bar-text">
-        <h4 class="dynamic-app-name">GamerX</h4>
-        <p>● Ready to Download (v2.4 • 38 MB)</p>
-      </div>
+        </section>
     </div>
 
-    <div class="floating-download-action">
-      <button class="btn-cyber btn-solid download-trigger-btn" type="button" style="padding: 10px 20px; font-size: 0.88rem;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        <span>Download APK</span>
-      </button>
+    <!-- ================= ADMIN PANEL ================= -->
+    <div id="admin-site">
+        <!-- Sidebar (Desktop) -->
+        <div class="admin-sidebar">
+            <div class="admin-brand">Mimo Admin</div>
+            <ul class="admin-menu">
+                <li class="active" onclick="switchAdminTab('sec-settings', this)">⚙️ App Settings</li>
+                <li onclick="switchAdminTab('sec-screenshots', this)">🖼️ Screenshots</li>
+                <li onclick="switchAdminTab('sec-apk', this)">📦 APK Manager</li>
+                <li onclick="switchAdminTab('sec-generate', this)">🔑 Generate Key</li>
+            </ul>
+            <div class="admin-bottom">
+                <button class="btn-exit" onclick="closeAdmin()">Exit Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <div class="admin-header-top">
+                <h1 id="admin-page-title">App Settings</h1>
+            </div>
+
+            <!-- 1. Settings Section -->
+            <div id="sec-settings" class="admin-section active">
+                <div class="card">
+                    <h2>Basic Information</h2>
+                    <label>App Name (Logo & Hero)</label>
+                    <input type="text" id="input-app-name" placeholder="e.g. Mimo Ai">
+                    
+                    <label>Version (e.g. 1.0.5)</label>
+                    <input type="text" id="input-version" placeholder="e.g. 1.0.0">
+                    
+                    <label>Title / Slogan</label>
+                    <input type="text" id="input-title" placeholder="e.g. Your Voice My World">
+                    
+                    <label>Description</label>
+                    <textarea id="input-desc" rows="4" placeholder="App description here..."></textarea>
+                    
+                    <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+                </div>
+            </div>
+
+            <!-- 2. Screenshots Section -->
+            <div id="sec-screenshots" class="admin-section">
+                <div class="card">
+                    <h2>Manage Screenshots</h2>
+                    <div class="upload-box" onclick="document.getElementById('ss-upload').click()">
+                        <div style="font-size: 30px; margin-bottom: 10px;">📸</div>
+                        <p>Click to upload screenshot</p>
+                        <input type="file" id="ss-upload" accept="image/*" style="display: none;" onchange="uploadScreenshot(event)">
+                    </div>
+                    
+                    <div class="ss-grid" id="admin-ss-grid">
+                        <!-- Admin thumbnails injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. APK Manager Section -->
+            <div id="sec-apk" class="admin-section">
+                <div class="card">
+                    <h2>Manage APK File</h2>
+                    
+                    <div id="current-apk-container">
+                        <!-- Current APK info injected here -->
+                    </div>
+
+                    <div class="upload-box" onclick="document.getElementById('apk-upload').click()" style="margin-top: 20px;">
+                        <div style="font-size: 30px; margin-bottom: 10px;">📦</div>
+                        <p>Click to upload new APK</p>
+                        <input type="file" id="apk-upload" accept=".apk" style="display: none;" onchange="uploadAPK(event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Generate Key Section -->
+            <div id="sec-generate" class="admin-section">
+                <div class="card">
+                    <h2>Generate License Key</h2>
+                    <label>Request from user</label>
+                    <textarea rows="2" placeholder="MIMO-REQ1..."></textarea>
+
+                    <label>Customer note</label>
+                    <input type="text" placeholder="Name / Phone">
+
+                    <label>Plan</label>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">Lifetime</button>
+                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">365 d</button>
+                        <button class="btn-primary" style="background: var(--bg-card); color: white;" onclick="this.style.background='var(--primary-blue)'">30 d</button>
+                    </div>
+
+                    <button class="btn-primary" onclick="alert('Key Generated!')">Generate Key</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Bottom Nav -->
+        <div class="mobile-nav">
+            <div class="active" onclick="switchAdminTab('sec-settings', this)">⚙️<br>Settings</div>
+            <div onclick="switchAdminTab('sec-screenshots', this)">🖼️<br>Images</div>
+            <div onclick="switchAdminTab('sec-apk', this)">📦<br>APK</div>
+            <div onclick="switchAdminTab('sec-generate', this)">🔑<br>Keys</div>
+            <div onclick="closeAdmin()" style="color: var(--danger);">🚪<br>Exit</div>
+        </div>
     </div>
-  </aside>
 
-  <!-- NOTIFICATION TOAST -->
-  <div id="toastNotification" class="toast-msg">
-    <div id="toastIcon" style="font-size: 1.2rem;">⚡</div>
-    <div>
-      <h5 id="toastTitle" style="font-family: var(--font-display); font-size: 0.9rem; margin-bottom: 2px;">Notice</h5>
-      <p id="toastMessage" style="font-size: 0.8rem; color: #d0c8dd;"></p>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       JAVASCRIPT LOGIC
-       ========================================== -->
-  <script>
-    /* ==========================================================
-       1. DYNAMIC EDITABLE APP CONFIGURATION
-       (Edit values right here to update entire website)
-       ========================================================== */
-    const APP_CONFIG = {
-      APP_NAME: "GamerX",
-      APP_LOGO_URL: "https://ibb.co/C3y3XQtH", // Provided page URL; script includes safe direct-view fallback
-      APK_DOWNLOAD_URL: "base.apk",
-      APP_SCREENSHOTS: [
-        "https://i.ibb.co/sd8zfQtj/IMG-20250830-033647.png",
-        "https://i.ibb.co/0y0jYRgS/IMG-20250830-033700.png",
-        "https://i.ibb.co/jP27yjpd/IMG-20250830-033709.png",
-        "https://i.ibb.co/gMJk4QW5/IMG-20250830-033719.png"
-      ]
-    };
-
-    // Helper: Generate fallback badge image if an external URL fails to load
-    const DEFAULT_LOGO_FALLBACK = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23120626'/><polygon points='50,15 85,35 85,75 50,92 15,75 15,35' fill='%23ff5500' stroke='%238b00ff' stroke-width='4'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='900' font-size='26'>GX</text></svg>";
-
-    /* ==========================================================
-       INITIALIZE BRANDING ACROSS ALL SECTIONS
-       ========================================================== */
-    function applyAppConfiguration() {
-      // Set Document Title
-      document.title = `${APP_CONFIG.APP_NAME} - Dominate The Battleground | Free Fire Esports`;
-
-      // Update App Name in all marked elements
-      document.querySelectorAll('.dynamic-app-name').forEach(el => {
-        el.textContent = APP_CONFIG.APP_NAME;
-      });
-
-      // Update Logos
-      // If the provided APP_LOGO_URL is a direct image URL or webpage link, ensure safe visual display
-      let logoSource = APP_CONFIG.APP_LOGO_URL;
-      if (logoSource.includes('ibb.co/') && !logoSource.includes('i.ibb.co/')) {
-        // Handle ibb viewer url conversion or fallback gracefully
-        const id = logoSource.split('/').filter(Boolean).pop();
-        logoSource = `https://i.ibb.co/${id}/logo.png`;
-      }
-
-      document.querySelectorAll('.dynamic-app-logo').forEach(img => {
-        img.src = logoSource;
-        img.onerror = () => {
-          img.onerror = null;
-          img.src = DEFAULT_LOGO_FALLBACK;
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // ডিফল্ট ডাটা (যদি লোকাল স্টোরেজে কিছু না থাকে)
+        const defaultData = {
+            appName: "Mimo Ai",
+            version: "1.0.0",
+            title: "Your Voice My World",
+            desc: "Experience the next generation of AI companion. Talk, share your screen, and automate your daily tasks with Mimo Ai.",
+            screenshots: [], // Base64 Images
+            apkName: "",
+            apkSize: "0 MB",
+            apkUrl: ""
         };
-      });
 
-      // Set Year in footer
-      const yrEl = document.getElementById('currentYear');
-      if (yrEl) yrEl.textContent = new Date().getFullYear();
-    }
+        // ডাটা লোড করা
+        let appData = JSON.parse(localStorage.getItem('mimoAppData')) || defaultData;
 
-    /* ==========================================================
-       SCREENSHOT SLIDER IMPLEMENTATION (AUTOPLAY, TOUCH, ARROWS)
-       ========================================================== */
-    class PhoneSlider {
-      constructor(trackId, dotsWrapId, screenshots) {
-        this.track = document.getElementById(trackId);
-        this.dotsWrap = document.getElementById(dotsWrapId);
-        this.screenshots = screenshots;
-        this.currentIndex = 0;
-        this.timer = null;
-        this.touchStartX = 0;
-        this.touchEndX = 0;
+        // UI আপডেট ফাংশন
+        function renderUI() {
+            // --- User Site Update ---
+            document.getElementById('nav-app-name').innerText = appData.appName;
+            document.getElementById('hero-app-name').innerText = appData.appName;
+            document.getElementById('hero-title').innerText = appData.title;
+            document.getElementById('hero-desc').innerText = appData.desc;
+            document.getElementById('hero-version').innerText = `Version ${appData.version} | Size: ${appData.apkSize}`;
+            
+            const downloadBtn = document.getElementById('download-btn');
+            if (!appData.apkUrl) {
+                downloadBtn.innerText = "Coming Soon...";
+                downloadBtn.style.background = "var(--text-muted)";
+                downloadBtn.style.pointerEvents = "none";
+            } else {
+                downloadBtn.innerText = "Download APK";
+                downloadBtn.style.background = "var(--primary-green)";
+                downloadBtn.style.pointerEvents = "auto";
+            }
 
-        if (this.track && this.screenshots && this.screenshots.length > 0) {
-          this.init();
-        }
-      }
+            // Update User Screenshots
+            const userGallery = document.getElementById('user-screenshot-gallery');
+            userGallery.innerHTML = '';
+            if (appData.screenshots.length === 0) {
+                userGallery.innerHTML = '<p class="no-data">No screenshots uploaded yet.</p>';
+            } else {
+                appData.screenshots.forEach(img => {
+                    userGallery.innerHTML += `<img src="${img}" alt="Screenshot">`;
+                });
+            }
 
-      init() {
-        this.track.innerHTML = '';
-        if (this.dotsWrap) this.dotsWrap.innerHTML = '';
+            // --- Admin Panel Update ---
+            document.getElementById('input-app-name').value = appData.appName;
+            document.getElementById('input-version').value = appData.version;
+            document.getElementById('input-title').value = appData.title;
+            document.getElementById('input-desc').value = appData.desc;
 
-        this.screenshots.forEach((url, i) => {
-          // Create slide
-          const slide = document.createElement('div');
-          slide.className = 'slider-slide';
-
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = `App Screenshot ${i + 1}`;
-          img.loading = i === 0 ? "eager" : "lazy";
-          img.onerror = () => {
-            img.onerror = null;
-            // Aesthetic placeholder if image network fails
-            img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='800' viewBox='0 0 400 800'><rect width='100%' height='100%' fill='%23120626'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23ff5500' font-family='sans-serif' font-size='22'>Free Fire Match Lobby UI</text></svg>";
-          };
-
-          slide.appendChild(img);
-          this.track.appendChild(slide);
-
-          // Create pagination dot
-          if (this.dotsWrap) {
-            const dot = document.createElement('div');
-            dot.className = `slider-dot ${i === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => this.goTo(i));
-            this.dotsWrap.appendChild(dot);
-          }
-        });
-
-        // Event listeners for Prev/Next
-        const prevBtn = document.getElementById('prevSlideBtn');
-        const nextBtn = document.getElementById('nextSlideBtn');
-
-        if (prevBtn) prevBtn.addEventListener('click', () => this.prev());
-        if (nextBtn) nextBtn.addEventListener('click', () => this.next());
-
-        // Hover pause
-        const phone = document.getElementById('phoneContainer');
-        if (phone) {
-          phone.addEventListener('mouseenter', () => this.stopAutoPlay());
-          phone.addEventListener('mouseleave', () => this.startAutoPlay());
-        }
-
-        // Touch Swipe
-        this.track.addEventListener('touchstart', (e) => {
-          this.touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        this.track.addEventListener('touchend', (e) => {
-          this.touchEndX = e.changedTouches[0].screenX;
-          this.handleSwipe();
-        }, { passive: true });
-
-        this.startAutoPlay();
-      }
-
-      handleSwipe() {
-        const threshold = 40;
-        if (this.touchEndX < this.touchStartX - threshold) {
-          this.next();
-        } else if (this.touchEndX > this.touchStartX + threshold) {
-          this.prev();
-        }
-      }
-
-      updateView() {
-        this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
-        if (this.dotsWrap) {
-          const dots = this.dotsWrap.querySelectorAll('.slider-dot');
-          dots.forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === this.currentIndex);
-          });
-        }
-      }
-
-      next() {
-        this.currentIndex = (this.currentIndex + 1) % this.screenshots.length;
-        this.updateView();
-      }
-
-      prev() {
-        this.currentIndex = (this.currentIndex - 1 + this.screenshots.length) % this.screenshots.length;
-        this.updateView();
-      }
-
-      goTo(index) {
-        this.currentIndex = index;
-        this.updateView();
-      }
-
-      startAutoPlay() {
-        this.stopAutoPlay();
-        this.timer = setInterval(() => {
-          this.next();
-        }, 3000);
-      }
-
-      stopAutoPlay() {
-        if (this.timer) clearInterval(this.timer);
-      }
-    }
-
-    // Hero mini carousel
-    function initHeroMiniCarousel() {
-      const container = document.getElementById('heroMiniSlider');
-      if (!container || !APP_CONFIG.APP_SCREENSHOTS.length) return;
-      APP_CONFIG.APP_SCREENSHOTS.forEach((url, i) => {
-        const slide = document.createElement('div');
-        slide.className = 'slider-slide';
-        const img = document.createElement('img');
-        img.src = url;
-        img.alt = `Screenshot ${i}`;
-        slide.appendChild(img);
-        container.appendChild(slide);
-      });
-      let current = 0;
-      setInterval(() => {
-        current = (current + 1) % APP_CONFIG.APP_SCREENSHOTS.length;
-        container.style.transform = `translateX(-${current * 100}%)`;
-      }, 3500);
-    }
-
-    /* ==========================================================
-       ANIMATED NUMBER COUNTERS (INTERSECTION OBSERVER)
-       ========================================================== */
-    function initStatsCounters() {
-      const counters = document.querySelectorAll('.stat-number');
-      let triggered = false;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !triggered) {
-            triggered = true;
-            counters.forEach(counter => {
-              const target = parseInt(counter.getAttribute('data-target'), 10);
-              const prefix = counter.getAttribute('data-prefix') || '';
-              const suffix = counter.getAttribute('data-suffix') || '';
-              const duration = 2000;
-              const stepTime = 30;
-              const steps = duration / stepTime;
-              const increment = target / steps;
-              let current = 0;
-
-              const interval = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                  current = target;
-                  clearInterval(interval);
-                }
-                counter.textContent = `${prefix}${Math.floor(current).toLocaleString('en-IN')}${suffix}`;
-              }, stepTime);
+            // Update Admin Screenshot Manager
+            const adminGrid = document.getElementById('admin-ss-grid');
+            adminGrid.innerHTML = '';
+            appData.screenshots.forEach((img, index) => {
+                adminGrid.innerHTML += `
+                    <div class="ss-item">
+                        <img src="${img}">
+                        <button class="ss-delete" onclick="deleteScreenshot(${index})">✖</button>
+                    </div>
+                `;
             });
-          }
-        });
-      }, { threshold: 0.3 });
 
-      const statsSection = document.querySelector('.stats-section');
-      if (statsSection) observer.observe(statsSection);
-    }
+            // Update Admin APK Manager
+            const apkContainer = document.getElementById('current-apk-container');
+            if (appData.apkUrl) {
+                apkContainer.innerHTML = `
+                    <div class="apk-file-info">
+                        <div style="display:flex; align-items:center;">
+                            <div class="file-icon">📱</div>
+                            <div>
+                                <div style="font-weight: bold;">${appData.apkName}</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">${appData.apkSize}</div>
+                            </div>
+                        </div>
+                        <button class="btn-danger" onclick="deleteAPK()">Delete</button>
+                    </div>
+                `;
+            } else {
+                apkContainer.innerHTML = `<p style="color: var(--text-muted);">No APK uploaded currently.</p>`;
+            }
+        }
 
-    /* ==========================================================
-       COUNTDOWN TIMERS FOR UPCOMING TOURNAMENTS
-       ========================================================== */
-    function initCountdowns() {
-      const chips = document.querySelectorAll('.countdown-chip');
-      chips.forEach(chip => {
-        let totalSeconds = parseInt(chip.getAttribute('data-timer'), 10) || 3600;
+        // সেটিংস সেভ করা
+        function saveSettings() {
+            appData.appName = document.getElementById('input-app-name').value || "Mimo Ai";
+            appData.version = document.getElementById('input-version').value || "1.0.0";
+            appData.title = document.getElementById('input-title').value;
+            appData.desc = document.getElementById('input-desc').value;
+            
+            saveToLocalStorage();
+            alert('Settings Saved Successfully!');
+        }
 
-        const update = () => {
-          if (totalSeconds <= 0) {
-            chip.textContent = "● LIVE / REGISTRATION CLOSED";
-            chip.style.color = "#00ff88";
-            chip.style.borderColor = "#00ff88";
-            return;
-          }
-          const hours = Math.floor(totalSeconds / 3600);
-          const mins = Math.floor((totalSeconds % 3600) / 60);
-          const secs = totalSeconds % 60;
+        // স্ক্রিনশট আপলোড (Base64)
+        function uploadScreenshot(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appData.screenshots.push(e.target.result);
+                    saveToLocalStorage();
+                };
+                reader.readAsDataURL(file);
+            }
+            event.target.value = ''; // Reset input
+        }
 
-          const pad = (n) => String(n).padStart(2, '0');
-          chip.textContent = `Starting in: ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
-          totalSeconds--;
+        // স্ক্রিনশট ডিলিট
+        function deleteScreenshot(index) {
+            if(confirm('Are you sure you want to delete this screenshot?')) {
+                appData.screenshots.splice(index, 1);
+                saveToLocalStorage();
+            }
+        }
+
+        // APK আপলোড (শুধু নাম এবং সাইজ সিমুলেট করা হচ্ছে)
+        function uploadAPK(event) {
+            const file = event.target.files[0];
+            if (file) {
+                appData.apkName = file.name;
+                // সাইজ ফরম্যাট করা (MB)
+                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                appData.apkSize = sizeInMB + " MB";
+                
+                // ডেমো হিসেবে একটি ফেইক URL সেট করা হচ্ছে (বাস্তব ব্যাকএন্ড ছাড়া ডাউনলোড কাজ করবে না)
+                appData.apkUrl = URL.createObjectURL(file); 
+                
+                saveToLocalStorage();
+                alert('APK Uploaded (Simulated)! Note: For real download, you need a backend server.');
+            }
+            event.target.value = '';
+        }
+
+        // APK ডিলিট
+        function deleteAPK() {
+            if(confirm('Are you sure you want to delete the current APK?')) {
+                appData.apkName = "";
+                appData.apkSize = "0 MB";
+                appData.apkUrl = "";
+                saveToLocalStorage();
+            }
+        }
+
+        // ডাউনলোড বাটনে ক্লিক করলে
+        function handleDownload(e) {
+            if(!appData.apkUrl) {
+                e.preventDefault();
+                return;
+            }
+            // ডেমো লিংক
+            e.preventDefault();
+            alert(`Downloading: ${appData.apkName}`);
+        }
+
+        // লোকাল স্টোরেজে সেভ এবং UI রিফ্রেশ
+        function saveToLocalStorage() {
+            localStorage.setItem('mimoAppData', JSON.stringify(appData));
+            renderUI();
+        }
+
+        // ================= ADMIN NAVIGATION LOGIC =================
+        
+        // URL চেক করা (#admon থাকলে অ্যাডমিন ওপেন হবে)
+        window.onload = function() {
+            renderUI();
+            if (window.location.hash === '#admon') {
+                openAdmin();
+            }
         };
 
-        update();
-        setInterval(update, 1000);
-      });
-    }
+        function openAdmin() {
+            document.getElementById('user-site').style.display = 'none';
+            document.getElementById('admin-site').style.display = 'flex';
+            window.location.hash = '#admon';
+        }
 
-    /* ==========================================================
-       FAQ ACCORDION
-       ========================================================== */
-    function initAccordion() {
-      const items = document.querySelectorAll('.faq-item');
-      items.forEach(item => {
-        const btn = item.querySelector('.faq-question');
-        if (!btn) return;
-        btn.addEventListener('click', () => {
-          const isOpen = item.classList.contains('open');
-          items.forEach(other => other.classList.remove('open'));
-          if (!isOpen) {
-            item.classList.add('open');
-          }
-        });
-      });
-    }
+        function closeAdmin() {
+            document.getElementById('user-site').style.display = 'block';
+            document.getElementById('admin-site').style.display = 'none';
+            window.location.hash = '';
+        }
 
-    /* ==========================================================
-       TOAST NOTIFICATION SYSTEM
-       ========================================================== */
-    function showToast(title, message, isError = false) {
-      const toast = document.getElementById('toastNotification');
-      const toastTitle = document.getElementById('toastTitle');
-      const toastMsg = document.getElementById('toastMessage');
-      const toastIcon = document.getElementById('toastIcon');
+        function switchAdminTab(sectionId, element) {
+            // সেকশন হাইড করা
+            document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
 
-      if (!toast) return;
-
-      toast.className = `toast-msg show ${isError ? 'error' : 'success'}`;
-      toastTitle.textContent = title;
-      toastMsg.textContent = message;
-      toastIcon.textContent = isError ? '⚠️' : '⚡';
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 5000);
-    }
-
-    /* ==========================================================
-       REAL APK DOWNLOAD TRIGGER & VALIDATION
-       ========================================================== */
-    function handleApkDownload() {
-      const downloadUrl = APP_CONFIG.APK_DOWNLOAD_URL;
-
-      if (!downloadUrl || downloadUrl.trim() === "") {
-        showToast("Download Unavailable", "The APK file URL is currently not configured or unavailable.", true);
-        return;
-      }
-
-      showToast("Starting Download", `Downloading ${APP_CONFIG.APP_NAME} (base.apk)...`, false);
-
-      // Verify availability via fetch HEAD/GET request
-      fetch(downloadUrl, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok || response.type === 'opaque' || response.status === 200 || response.status === 304) {
-            triggerFileDownload(downloadUrl);
-          } else {
-            throw new Error(`File returned HTTP status ${response.status}`);
-          }
-        })
-        .catch(err => {
-          // If HEAD is restricted by CORS or local relative file testing, attempt direct link click
-          // If it fails to fetch, report authentic error
-          try {
-            triggerFileDownload(downloadUrl);
-          } catch(e) {
-            showToast("Download Error", "Unable to reach APK download server. Please try again later.", true);
-          }
-        });
-    }
-
-    function triggerFileDownload(url) {
-      const anchor = document.createElement('a');
-      anchor.href = url;
-      anchor.setAttribute('download', 'base.apk');
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-    }
-
-    /* ==========================================================
-       BIND ALL DOWNLOAD BUTTONS
-       ========================================================== */
-    function initDownloadButtons() {
-      const buttons = document.querySelectorAll('.download-trigger-btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          handleApkDownload();
-        });
-      });
-    }
-
-    /* ==========================================================
-       APPLICATION ENTRY POINT
-       ========================================================== */
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Apply config
-      applyAppConfiguration();
-
-      // 2. Initialize Slider
-      new PhoneSlider('mainSliderTrack', 'sliderDotsWrap', APP_CONFIG.APP_SCREENSHOTS);
-      initHeroMiniCarousel();
-
-      // 3. Stats & Countdowns
-      initStatsCounters();
-      initCountdowns();
-
-      // 4. Accordions & Download Actions
-      initAccordion();
-      initDownloadButtons();
-    });
-  </script>
+            // মেনু অ্যাক্টিভ করা (ডেস্কটপ)
+            if(element.tagName === 'LI') {
+                document.querySelectorAll('.admin-menu li').forEach(li => li.classList.remove('active'));
+                element.classList.add('active');
+                document.getElementById('admin-page-title').innerText = element.innerText.replace(/[^\w\s]/gi, '').trim();
+            } 
+            // মেনু অ্যাক্টিভ করা (মোবাইল)
+            else if(element.tagName === 'DIV') {
+                document.querySelectorAll('.mobile-nav div').forEach(div => div.classList.remove('active'));
+                element.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
